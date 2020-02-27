@@ -4,13 +4,15 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import CupertinoToolbar from "../components/CupertinoToolbar.js";
 
 import CupertinoHeaderWithActionButton from "../components/CupertinoHeaderWithActionButton.js";
-
+import ProfileScreen from '../screens/Profile'
 function Dashboard(props) {
   return (
     <View style={styles.container}>
       <CupertinoToolbar
         icon1Name="ios-home"
-        icon2Name="account"
+
+        icon2Name="account"  onPress={ProfileScreen} //ProfileScreen
+        
         icon3Name="ios-notifications"
         style={styles.cupertinoToolbar}
       ></CupertinoToolbar>
@@ -63,6 +65,10 @@ function Dashboard(props) {
               resizeMode="contain"
               style={styles.image5}
             ></Image>
+          </View>
+          <View style={styles.withdrawRow}>
+            <Text style={styles.withdraw}>Withdraw</Text>
+            <Text style={styles.scheduler}>Scheduler</Text>
           </View>
         </View>
       </View>
@@ -125,7 +131,7 @@ const styles = StyleSheet.create({
     marginTop: 125
   },
   rect2: {
-    top: 145,
+    top: 143,
     left: 21,
     width: 333,
     height: 212,
@@ -149,7 +155,7 @@ const styles = StyleSheet.create({
   imageRow: {
     height: 50,
     flexDirection: "row",
-    marginTop: 19,
+    marginTop: 21,
     marginLeft: 23,
     marginRight: 22
   },
@@ -178,30 +184,47 @@ const styles = StyleSheet.create({
   },
   image4: {
     width: 50,
-    height: 50,
-    marginTop: 20
+    height: 50
   },
   image5: {
-    width: 60,
-    height: 70,
-    marginLeft: 63
+    width: 50,
+    height: 50,
+    marginLeft: 71
   },
   image4Row: {
-    height: 70,
+    height: 50,
     flexDirection: "row",
     marginTop: 27,
     marginLeft: 29,
-    marginRight: 131
+    marginRight: 133
+  },
+  withdraw: {
+    color: "rgba(50,187,46,1)",
+    fontSize: 18,
+    fontFamily: "roboto-regular"
+  },
+  scheduler: {
+    color: "rgba(50,187,46,1)",
+    fontSize: 18,
+    fontFamily: "roboto-regular",
+    marginLeft: 49
+  },
+  withdrawRow: {
+    height: 18,
+    flexDirection: "row",
+    marginTop: 2,
+    marginLeft: 16,
+    marginRight: 113
   },
   rectStack: {
     width: 375,
-    height: 357
+    height: 355
   },
   rect3: {
     width: 335,
     height: 35,
     backgroundColor: "rgba(255,255,255,1)",
-    marginTop: 168,
+    marginTop: 170,
     marginLeft: 19
   },
   rect4: {

@@ -3,12 +3,84 @@ import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import MaterialButtonSuccess1 from "../components/MaterialButtonSuccess1";
 import { Button } from "native-base";
 import Dashboard from "./Dashboard";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import firebase from 'react-native-firebase'
+import { GoogleSignin } from 'react-native-google-signin';
+import firebase from 'react-native-firebase'
+import CupertinoHeaderWithActionButton from "../components/CupertinoHeaderWithActionButton.js";
+
+
+
+export async function facebookLogin() {
+  try {
+    const result = await LoginManager.logInWithReadPermissions(['public_profile', 'email']);
+
+    if (result.isCancelled) {
+      // handle this however suites the flow of your app
+      throw new Error('User cancelled request'); 
+    }
+
+    console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
+
+    // get the access token
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      // handle this however suites the flow of your app
+      throw new Error('Something went wrong obtaining the users access token');
+    }
+
+    // create a new firebase credential with the token
+    const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+
+    // login with credential
+    const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
+
+    console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()))
+  } catch (e) {
+    console.error(e);
+  }
+
+
+}
+
+
+export async function googleLogin() {
+  try {
+    // add any configuration settings here:
+    await GoogleSignin.configure();
+
+    const data = await GoogleSignin.signIn();
+
+    // create a new firebase credential with the token
+    const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
+    // login with credential
+    const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
+
+    console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 
 function Register(props) {
   return (
     <View style={styles.container}>
-      <MaterialButtonSuccess1 text1="Login" style={styles.materialButtonSuccess1}>  </MaterialButtonSuccess1>
+
+<CupertinoHeaderWithActionButton
+        text3="Help"
+        text1=""
+        text2="Home"
+        button2="Login"
+        style={styles.cupertinoHeaderWithActionButton1}
+      ></CupertinoHeaderWithActionButton>
+       
+      <MaterialButtonSuccess1
+      //Login Button onClick if Account Exist, Redirected to Dashboard/ No Logic 
+      onPress={(Dashboard)}
+      text1="Login"
+      style={styles.materialButtonSuccess1}>  </MaterialButtonSuccess1>
       <Image
         source={require("../../src/assets/images/logo.png")}
         resizeMode="contain"
@@ -19,6 +91,7 @@ function Register(props) {
 
           <TouchableOpacity style={styles.FacebookStyle} activeOpacity={0.10}>
 
+
           <Image 
           source={require('./../assets/social_login_img/fb_login.png')} 
           style={styles.ImageIconStyle} 
@@ -26,10 +99,23 @@ function Register(props) {
  
          <View style={styles.SeparatorLine} />
  
-         <Text style={styles.TextStyle,styles.setFb_Text_White}> Register With Facebook </Text>
+        
+         <Text 
+         ////Facebook SocialLogin Button, Register on Click, No Logic
+
+         onPress={(facebookLogin)}
+         /////
+         style={styles.TextStyle,styles.setFb_Text_White}
+         > Register With Facebook </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.GooglePlusStyle} activeOpacity={0.10  }>
+            <TouchableOpacity 
+            // Google Button Login Function
+            onPress={(googleLogin)}
+            //////
+            
+            
+            style={styles.GooglePlusStyle} activeOpacity={0.10  }>
  
          <Image 
           source={require('./../assets/social_login_img/google_login.png')} 
