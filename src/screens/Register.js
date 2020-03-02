@@ -1,73 +1,102 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import MaterialButtonSuccess1 from "../components/MaterialButtonSuccess1";
-import { Button } from "native-base";
-import Dashboard from "./Dashboard";
-import { AccessToken, LoginManager } from 'react-native-fbsdk';
-import firebase from 'react-native-firebase'
-import { GoogleSignin } from 'react-native-google-signin';
-import firebase from 'react-native-firebase'
 import CupertinoHeaderWithActionButton from "../components/CupertinoHeaderWithActionButton.js";
+import Dashboard from "./Dashboard";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
 
-
-export async function facebookLogin() {
-  try {
-    const result = await LoginManager.logInWithReadPermissions(['public_profile', 'email']);
-
-    if (result.isCancelled) {
-      // handle this however suites the flow of your app
-      throw new Error('User cancelled request'); 
-    }
-
-    console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
-
-    // get the access token
-    const data = await AccessToken.getCurrentAccessToken();
-
-    if (!data) {
-      // handle this however suites the flow of your app
-      throw new Error('Something went wrong obtaining the users access token');
-    }
-
-    // create a new firebase credential with the token
-    const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-
-    // login with credential
-    const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
-
-    console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()))
-  } catch (e) {
-    console.error(e);
-  }
-
-
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
+///Social Login Platform Modules
+// import { AccessToken, LoginManager } from 'react-native-fbsdk';
+// import firebase from 'react-native-firebase'
+// import { GoogleSignin } from 'react-native-google-signin';
 
-export async function googleLogin() {
-  try {
-    // add any configuration settings here:
-    await GoogleSignin.configure();
 
-    const data = await GoogleSignin.signIn();
+///////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-    // create a new firebase credential with the token
-    const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
-    // login with credential
-    const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
 
-    console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()));
-  } catch (e) {
-    console.error(e);
-  }
-}
+
+// // Calling the following function will open the FB login dialogue:
+// export async function facebookLogin() {
+//   try {
+//     const result = await LoginManager.logInWithReadPermissions(['public_profile', 'email']);
+
+//     if (result.isCancelled) {
+//       // handle this however suites the flow of your app
+//       throw new Error('User cancelled request'); 
+//     }
+
+//     console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
+
+//     // get the access token
+//     const data = await AccessToken.getCurrentAccessToken();
+
+//     if (!data) {
+//       // handle this however suites the flow of your app
+//       throw new Error('Something went wrong obtaining the users access token');
+//     }
+
+//     // create a new firebase credential with the token
+//     const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+
+//     // login with credential
+//     const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
+
+//     console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()))
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }
+
+// // Calling this function will open Google for login.
+// export async function googleLogin() {
+//   try {
+//     // add any configuration settings here:
+//     await GoogleSignin.configure();
+
+//     const data = await GoogleSignin.signIn();
+
+//     // create a new firebase credential with the token
+//     const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
+//     // login with credential
+//     const firebaseUserCredential = await firebase.auth().signInWithCredential(credential);
+
+//     console.warn(JSON.stringify(firebaseUserCredential.user.toJSON()));
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }
+
+// const Navigator = createStackNavigator({
+//   Home:{screen: Dashboard}
+//});
+
 
 
 function Register(props) {
-  return (
-    <View style={styles.container}>
 
+
+//  const {navigate, state} = props.navigate.navigation('Dashboard');
+  return (
+    
+    
+    <View style={styles.container}>
+    
+   
 <CupertinoHeaderWithActionButton
         text3="Help"
         text1=""
@@ -78,7 +107,13 @@ function Register(props) {
        
       <MaterialButtonSuccess1
       //Login Button onClick if Account Exist, Redirected to Dashboard/ No Logic 
-      onPress={(Dashboard)}
+   
+      // onPress={() => navigate ('Dashboard')}
+     // onPress={this.props.Dashboard}
+
+     onPress={Dashboard}
+
+  
       text1="Login"
       style={styles.materialButtonSuccess1}>  </MaterialButtonSuccess1>
       <Image
@@ -103,15 +138,19 @@ function Register(props) {
          <Text 
          ////Facebook SocialLogin Button, Register on Click, No Logic
 
-         onPress={(facebookLogin)}
+        // onPress={(facebookLogin)}
          /////
+
+
          style={styles.TextStyle,styles.setFb_Text_White}
          > Register With Facebook </Text>
             </TouchableOpacity>
 
+
+
             <TouchableOpacity 
             // Google Button Login Function
-            onPress={(googleLogin)}
+           // onPress={(googleLogin)}
             //////
             
             
@@ -128,15 +167,13 @@ function Register(props) {
  
        </TouchableOpacity>
       
+      
     </View>
-  );
+  
+  )};
 
 
-  <Button MaterialButtonSuccess1 onPress={this.Dashboard}></Button>
 
- 
-
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -147,7 +184,7 @@ const styles = StyleSheet.create({
     height: 36,
     // marginTop: 639,
     borderRadius:480,
-    marginTop: 550,
+    marginTop: 510,
 
     alignSelf: "center"
   },
@@ -219,4 +256,9 @@ const styles = StyleSheet.create({
   
 });
 
+
+
+
+
 export default Register;
+  

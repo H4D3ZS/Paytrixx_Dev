@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Image, View, Dimensions} from 'react-native';
 
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
-import Registration from './src/screens/Register';
+import Registration from './src/screens/Register.js';
 
 const App: () => React$Node = () => {
   const [screen, changeScreen] = useState('app');

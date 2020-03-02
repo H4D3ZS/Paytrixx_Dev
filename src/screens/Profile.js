@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import CupertinoHeaderWithActionButton from "./components/CupertinoHeaderWithActionButton";
-import CupertinoToolbar from "./components/CupertinoToolbar";
+import CupertinoHeaderWithActionButton from "../components/CupertinoHeaderWithActionButton";
+import CupertinoToolbar from "../components/CupertinoToolbar";
+
 
 function Index(props) {
   return (

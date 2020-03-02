@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-
 import CupertinoToolbar from "../components/CupertinoToolbar.js";
-
 import CupertinoHeaderWithActionButton from "../components/CupertinoHeaderWithActionButton.js";
 import ProfileScreen from '../screens/Profile'
-function Dashboard(props) {
+
+
+
+function Dashboard(navigation) {
   return (
+
+    <NavigationContainer>
+    <Stack.Navigator>
     <View style={styles.container}>
       <CupertinoToolbar
         icon1Name="ios-home"
@@ -77,6 +81,11 @@ function Dashboard(props) {
       <Text style={styles.viewMore}>View More ...</Text>
       <Text style={styles.recentTransactions}>Recent Transactions</Text>
     </View>
+
+    <Stack.Screen name="Dashboard" component={Dashboard} />
+    </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
